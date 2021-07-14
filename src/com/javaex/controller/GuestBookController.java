@@ -61,7 +61,7 @@ public class GuestBookController extends HttpServlet {
 			guestBookDao.insert(guestBookAdd);
 			
 			//redirect
-			String url = "http://localhost:8088/mysite/guestbook?action=addList";
+			String url = "/mysite/guestbook?action=addList";
 			WebUtil.redirect(request, response, url);
 			
 		} else if("deleteForm".equals(action)) {
@@ -80,7 +80,7 @@ public class GuestBookController extends HttpServlet {
 			guestBookDao.delete(password, no);
 			
 			//redirect
-			String url = "http://localhost:8088/mysite/guestbook?action=addList";
+			String url = "/mysite/guestbook?action=addList";
 			WebUtil.redirect(request, response, url);
 		}
 		
