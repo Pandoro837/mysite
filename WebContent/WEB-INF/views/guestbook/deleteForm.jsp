@@ -19,7 +19,7 @@
 
 		<div id="header" class="clearfix">
 			<h1>
-				<a href="http://localhost:8088/mysite/main">MySite</a>
+				<a href="/mysite/main">MySite</a>
 			</h1>
 
 			<!-- 
@@ -30,8 +30,8 @@
 			</ul>
 			-->
 			<ul>
-				<li><a href="http://localhost:8088/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
-				<li><a href="http://localhost:8088/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
+				<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
+				<li><a href="/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
 			</ul>
 
 		</div>
@@ -42,7 +42,7 @@
 				<li><a href="">입사지원서</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="http://localhost:8088/mysite/guestbook?action=addList">방명록</a></li>
+				<li><a href="/mysite/guestbook?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -51,7 +51,7 @@
 			<div id="aside">
 				<h2>방명록</h2>
 				<ul>
-					<li>일반방명록</li>
+					<li><a href="/mysite/guestbook?action=addList">일반방명록</a></li>
 					<li>ajax방명록</li>
 				</ul>
 			</div>
@@ -87,7 +87,7 @@
 								<td>비밀번호</td>
 								<td><input type="password" name="password" value = ""></td>
 								<td class="text-left"><button type="submit">삭제</button></td>
-								<td><a href="http://localhost:8088/mysite/guestbook?action=addList">[메인으로 돌아가기]</a></td>
+								<td><a href="/mysite/guestbook?action=addList">[메인으로 돌아가기]</a></td>
 							</tr>
 						</table>
 						<input type='hidden' name="" value=""> <input type='hidden' name="" value="">
