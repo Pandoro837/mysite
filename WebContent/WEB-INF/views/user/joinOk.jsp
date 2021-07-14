@@ -14,7 +14,7 @@
 
 		<div id="header" class="clearfix">
 			<h1>
-				<a href="http://localhost:8088/mysite/main">MySite</a>
+				<a href="/mysite/main">MySite</a>
 			</h1>
 
 			<!-- 
@@ -25,8 +25,8 @@
 			</ul>
 			-->
 			<ul>
-				<li><a href="http://localhost:8088/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
-				<li><a href="http://localhost:8088/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
+				<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
+				<li><a href="/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
 			</ul>
 
 		</div>
@@ -37,7 +37,7 @@
 				<li><a href="">입사지원서</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="/mysite/guestbook?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -47,8 +47,8 @@
 				<h2>회원</h2>
 				<ul>
 					<li>회원정보</li>
-					<li>로그인</li>
-					<li>회원가입</li>
+					<li><a href="/mysite/user?action=loginForm">로그인</a></li>
+					<li><a href="/mysite/user?action=joinForm">회원가입</a></li>
 				</ul>
 			</div>
 			<!-- //aside -->
@@ -72,7 +72,7 @@
 					<div id="joinOK">
 
 						<p class="text-large bold">
-							회원가입을 축하합니다.<br> <br> <a href="http://localhost:8088/mysite/user?action=loginForm">[로그인하기]</a>
+							회원가입을 축하합니다.<br> <br> <a href="/mysite/user?action=loginForm">[로그인하기]</a>
 						</p>
 
 					</div>
