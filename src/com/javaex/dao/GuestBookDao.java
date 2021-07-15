@@ -22,6 +22,7 @@ public class GuestBookDao {
 	private String pw ="guestbookdb";
 	
 	private void getConnection(){
+		
 		try {
 		    // 1. JDBC 드라이버 (Oracle) 로딩
 			Class.forName(driver);
@@ -33,7 +34,9 @@ public class GuestBookDao {
 		} catch (SQLException e) {
 		    System.out.println("error:" + e);
 		}
+		
 	}
+	
 	private void close() {
 		try {
 	        if (rs != null) {
