@@ -1,62 +1,26 @@
 package com.javaex.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.javaex.vo.UserVo;
 
-public class UserDao {
+public class UserDao extends DaoUtil {
 	
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String id = "userdb";
 	private String pw = "userdb";
-	
-	
-	private void getConnection(){
-		
-		try {
-		    // 1. JDBC 드라이버 (Oracle) 로딩
-			Class.forName(driver);
-		    // 2. Connection 얻어오기
-			conn = DriverManager.getConnection(url, id, pw);
-		 
-		} catch (ClassNotFoundException e) {
-		    System.out.println("error: 드라이버 로딩 실패 - " + e);
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		}
-		
-	}
-	
-	private void close() {
-		try {
-	        if (rs != null) {
-	            rs.close();
-	        }                
-	        if (pstmt != null) {
-	            pstmt.close();
-	        }
-	        if (conn != null) {
-	            conn.close();
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("error:" + e);
-	    }
-	}
 	
 	//회원가입
 	public int insert(UserVo userVo) {
 		int iCount = -1;
 		
-		getConnection();
+		conn = super.getConnection(id, pw);
 		
 		String query = "";
 		query+= " INSERT INTO users ";
@@ -78,14 +42,14 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 		
 		return iCount;
 	}
 	
 	public UserVo getUser(UserVo userVo) {
 		
-		getConnection();
+		conn = super.getConnection(id, pw);
 		
 		String query = "";
 		query+= " SELECT no, name, gender ";
@@ -117,14 +81,14 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 		
 		return	userVo;
 	}
 	
 	public UserVo modify(UserVo userVo) {
 		
-		getConnection();
+		conn = super.getConnection(id, pw);
 		
 		String query = "";
 		query+= " UPDATE users ";
@@ -149,7 +113,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 		
 		return this.getUser(userVo);
 		

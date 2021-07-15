@@ -1,7 +1,6 @@
 package com.javaex.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,53 +9,20 @@ import java.util.List;
 
 import com.javaex.vo.GuestBookVo;
 
-public class GuestBookDao {
+public class GuestBookDao extends DaoUtil {
 	
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
-	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String id ="guestbookdb";
 	private String pw ="guestbookdb";
 	
-	private void getConnection(){
-		
-		try {
-		    // 1. JDBC 드라이버 (Oracle) 로딩
-			Class.forName(driver);
-		    // 2. Connection 얻어오기
-			conn = DriverManager.getConnection(url, id, pw);
-		 
-		} catch (ClassNotFoundException e) {
-		    System.out.println("error: 드라이버 로딩 실패 - " + e);
-		} catch (SQLException e) {
-		    System.out.println("error:" + e);
-		}
-		
-	}
-	
-	private void close() {
-		try {
-	        if (rs != null) {
-	            rs.close();
-	        }                
-	        if (pstmt != null) {
-	            pstmt.close();
-	        }
-	        if (conn != null) {
-	            conn.close();
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("error:" + e);
-	    }
-	}
-	
 	public List<GuestBookVo> getList(){
+		
 		List<GuestBookVo> guestBookList = new ArrayList<GuestBookVo>();
 		
-		getConnection();
+		conn = super.getConnection(id, pw);
 		
 		try {
 			String query = "";
@@ -87,12 +53,13 @@ public class GuestBookDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 		return guestBookList;
 	}
 	
 	public void insert(GuestBookVo guestBookVo) {
-		getConnection();
+
+		conn = super.getConnection(id, pw);
 		
 		try {
 			String query = "";
@@ -110,11 +77,12 @@ public class GuestBookDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 	}
 
 	public void delete(String pw, int no) {
-		getConnection();
+		
+		conn = super.getConnection(id, pw);
 		
 		try {
 			String query = "";
@@ -134,7 +102,7 @@ public class GuestBookDao {
 			e.printStackTrace();
 		}
 		
-		close();
+		super.close(conn, pstmt, rs);
 	}
 	
 }
