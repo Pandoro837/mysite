@@ -49,7 +49,7 @@
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<input type="hidden" name="id" value="<%=userInfo.getId()%>">	
+								<input type="hidden" name="id" value="<%=userInfo.getId() %>">	<!-- modify 이후, session에 넣을 authUser 갱신용 id -->
 								<span class="text-large bold"><%=userInfo.getId() %></span>
 							</div>
 
