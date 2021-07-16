@@ -8,13 +8,13 @@ public class UserVo {
 	private String name;
 	private String gender;
 	
-	public UserVo(String id, String pw) {
+	public UserVo(String id, String pw) {		//getUser용 Vo
 		super();
 		this.id = id;
 		this.pw = pw;
 	}
 
-	public UserVo(String id, String pw, String name, String gender) {
+	public UserVo(String id, String pw, String name, String gender) {	
 		super();
 		this.id = id;
 		this.pw = pw;
@@ -22,10 +22,9 @@ public class UserVo {
 		this.gender = gender;
 	}
 	
-	public UserVo(int no, String id, String pw, String name, String gender) {
+	public UserVo(int no, String pw, String name, String gender) {
 		super();
 		this.no = no;
-		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.gender = gender;
