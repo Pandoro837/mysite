@@ -73,11 +73,10 @@ public class UserController extends HttpServlet {
 			String pw = request.getParameter("pw");
 
 			// vo로 묶기
-			UserVo userLogin = new UserVo(id, pw);
 
 			// 회원정보 확인(세션 저장용)
 			UserDao userDao = new UserDao();
-			UserVo authUser = userDao.getUser(userLogin);			//id, pw, no, name 
+			UserVo authUser = userDao.getUser(id, pw);			//id, pw, no, name 
 
 			if (authUser.getName() != null) {						//login 성공
 				System.out.println("로그인 성공");
@@ -111,14 +110,12 @@ public class UserController extends HttpServlet {
 			UserDao userDao = new UserDao();
 			
 			HttpSession session = request.getSession();
-
-			UserVo userInfo = (UserVo)session.getAttribute("authUser");  //id, pw, no, name 
+			int no = ((UserVo)session.getAttribute("authUser")).getNo();  // no, name 
 			
+			UserVo userInfo = new UserVo(no);
 			userInfo = userDao.modifyInfo(userInfo);				//id, pw, no, name, gender
-																	//gender 값은 현재 사이트에서 modify에서만 사용된다, 그러므로 modify에서 필요한 gender 값을 다시 추가해준다
-																	//지금은 단순히 gender 하나이지만, authUser의 파라미터의 갯수가 늘어난다면 불필요한 데이터를 다 담는 것은 낭비이기 때문에
-																	//필요할 때만 꺼내서 사용하는 것이 맞다고 생각한다
-			request.setAttribute("userInfo", userInfo);
+			
+			request.setAttribute("userInfo", userInfo);							//request에 저장
 
 			String path = "/WEB-INF/views/user/modifyForm.jsp";
 			WebUtil.forward(request, response, path);
@@ -127,24 +124,23 @@ public class UserController extends HttpServlet {
 			System.out.println("UserController_modify");
 
 			int no = Integer.parseInt(request.getParameter("no"));
-			String id = request.getParameter("id");					//session에 넣을 authUser 갱신용 id
 			String pw = request.getParameter("pw");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
 
-			UserVo userModify = new UserVo(no, pw, name, gender);	//id는 update 대상이 아니므로 제외한다
+			UserVo userModify = new UserVo(no, pw, name, gender);	
 			UserDao userDao = new UserDao();
 			
 			userDao.modify(userModify);								//update
 			
-			UserVo authUser = new UserVo(id, pw);
-			
-			authUser = userDao.getUser(authUser);
+			System.out.println((request.getSession()).getAttribute("authUser")+"modify 세션");
 			
 			// modify 이후 수정된 값을 가져와서 다시 세션에 입력
 			HttpSession session = request.getSession(); // 변수 session에 세션 저장
-			session.setAttribute("authUser", authUser); // 
-
+			((UserVo)session.getAttribute("authUser")).setName(name);	//세션의 authUser에 setName을 업데이트
+			
+			System.out.println((request.getSession()).getAttribute("authUser")+"modify 수정 후 세션");
+			
 			// 리다이렉트
 			String url = "/mysite/main";
 			WebUtil.redirect(request, response, url);

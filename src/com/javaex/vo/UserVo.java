@@ -8,6 +8,12 @@ public class UserVo {
 	private String name;
 	private String gender;
 	
+	public UserVo() {
+	}
+	public UserVo(int no) {
+		this.no = no;
+	}
+	
 	public UserVo(String id, String pw) {		//getUser용 Vo
 		super();
 		this.id = id;

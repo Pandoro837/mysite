@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.javaex.vo.UserVo" %>
 <%
-	UserVo userInfo = (UserVo)request.getAttribute("userInfo");
+	UserVo userInfo = (UserVo)request.getAttribute("userInfo");			//저장된 vo 꺼내오기
 %>
 <!DOCTYPE html>
 <html>
@@ -49,7 +49,6 @@
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<input type="hidden" name="id" value="<%=userInfo.getId() %>">	<!-- modify 이후, session에 넣을 authUser 갱신용 id -->
 								<span class="text-large bold"><%=userInfo.getId() %></span>
 							</div>
 

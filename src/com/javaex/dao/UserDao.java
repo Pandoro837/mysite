@@ -13,14 +13,14 @@ public class UserDao extends DaoUtil {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private String id = "userdb";
-	private String pw = "userdb";
+	private String dbId = "userdb";
+	private String dbPw = "userdb";
 	
 	//회원가입
 	public int insert(UserVo userVo) {			//회원가입용 메소드
 		int iCount = -1;
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		String query = "";
 		query+= " INSERT INTO users ";
@@ -47,9 +47,11 @@ public class UserDao extends DaoUtil {
 		return iCount;
 	}
 	
-	public UserVo getUser(UserVo userVo) {		//유저 로그인용 메소드
+	public UserVo getUser(String id, String pw) {		//유저 로그인용 메소드
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
+		
+		UserVo authUser = new UserVo();
 		
 		String query = "";
 		query+= " SELECT no, name ";
@@ -61,8 +63,8 @@ public class UserDao extends DaoUtil {
 			
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, userVo.getId());
-			pstmt.setString(2, userVo.getPw());
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
 			
 			rs = pstmt.executeQuery();
 			
@@ -70,8 +72,8 @@ public class UserDao extends DaoUtil {
 				int no = rs.getInt("no");
 				String name = rs.getString("name");
 				
-				userVo.setNo(no);
-				userVo.setName(name);
+				authUser.setNo(no);
+				authUser.setName(name);
 			}
 		
 		} catch (SQLException e) {
@@ -79,34 +81,43 @@ public class UserDao extends DaoUtil {
 			e.printStackTrace();
 		}
 		
+		
+		
 		super.close(conn, pstmt, rs);
 		
-		return	userVo;
+		return	authUser;
 	}
 	
 	public UserVo modifyInfo(UserVo userVo) {		//modify에 필요한 정보만 올려주는 메소드
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		String query = "";
-		query+= " SELECT gender ";
+		query+= " SELECT id, ";
+		query+= " 		 password, ";
+		query+= " 		 name, ";
+		query+= " 		 gender ";
 		query+= " FROM users ";
-		query+= " WHERE id = ? ";
-		query+= "   AND password = ? ";
+		query+= " WHERE no = ? ";
 		
 		try {
 			
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, userVo.getId());
-			pstmt.setString(2, userVo.getPw());
+			pstmt.setInt(1, userVo.getNo());
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				
+				String id = rs.getString("id");
+				String pw = rs.getString("password");
+				String name = rs.getString("name");
 				String gender = rs.getString("gender");
 				
+				userVo.setId(id);
+				userVo.setPw(pw);
+				userVo.setName(name);
 				userVo.setGender(gender);
 			}
 		
@@ -123,7 +134,7 @@ public class UserDao extends DaoUtil {
 	
 	public void modify(UserVo userVo) {
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		String query = "";
 		query+= " UPDATE users ";

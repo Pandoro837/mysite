@@ -23,8 +23,7 @@ public class DaoTest {
 			System.out.println(guestBookInfo);
 		}
 		
-		userVo = new UserVo("aaa", "12345");
-		userDao.getUser(userVo);
+		userDao.getUser("aaa", "1234");
 		
 		System.out.println(userVo.toString());
 		

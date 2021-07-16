@@ -10,7 +10,7 @@
 
 	<%
 	if (authUser != null) {
-		//System.out.println(authUser.toString());	--gender 값이 modify 이후에도 남아있는지 확인하는 용도
+		System.out.println(authUser.toString()+"-헤더 session");	//세션 값 확인
 	%>
 	<ul>
 		<li><%=authUser.getName()%> 님 안녕하세요^^</li>
