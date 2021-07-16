@@ -17,7 +17,7 @@ public class UserDao extends DaoUtil {
 	private String pw = "userdb";
 	
 	//회원가입
-	public int insert(UserVo userVo) {
+	public int insert(UserVo userVo) {			//회원가입용 메소드
 		int iCount = -1;
 		
 		conn = super.getConnection(id, pw);
@@ -47,12 +47,12 @@ public class UserDao extends DaoUtil {
 		return iCount;
 	}
 	
-	public UserVo getUser(UserVo userVo) {
+	public UserVo getUser(UserVo userVo) {		//유저 로그인용 메소드
 		
 		conn = super.getConnection(id, pw);
 		
 		String query = "";
-		query+= " SELECT no, name, gender ";
+		query+= " SELECT no, name ";
 		query+= " FROM users ";
 		query+= " WHERE id = ? ";
 		query+= "   AND password = ? ";
@@ -69,11 +69,9 @@ public class UserDao extends DaoUtil {
 			while(rs.next()) {
 				int no = rs.getInt("no");
 				String name = rs.getString("name");
-				String gender = rs.getString("gender");
 				
 				userVo.setNo(no);
 				userVo.setName(name);
-				userVo.setGender(gender);
 			}
 		
 		} catch (SQLException e) {
@@ -86,7 +84,44 @@ public class UserDao extends DaoUtil {
 		return	userVo;
 	}
 	
-	public UserVo modify(UserVo userVo) {
+	public UserVo modifyInfo(UserVo userVo) {		//modify에 필요한 정보만 올려주는 메소드
+		
+		conn = super.getConnection(id, pw);
+		
+		String query = "";
+		query+= " SELECT gender ";
+		query+= " FROM users ";
+		query+= " WHERE id = ? ";
+		query+= "   AND password = ? ";
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getPw());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				String gender = rs.getString("gender");
+				
+				userVo.setGender(gender);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		super.close(conn, pstmt, rs);
+		
+		return	userVo;
+		
+	}
+	
+	public void modify(UserVo userVo) {
 		
 		conn = super.getConnection(id, pw);
 		
@@ -114,8 +149,6 @@ public class UserDao extends DaoUtil {
 		}
 		
 		super.close(conn, pstmt, rs);
-		
-		return this.getUser(userVo);
 		
 	}
 	
