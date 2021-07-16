@@ -10,6 +10,7 @@
 
 	<%
 	if (authUser != null) {
+		//System.out.println(authUser.toString());	--gender 값이 modify 이후에도 남아있는지 확인하는 용도
 	%>
 	<ul>
 		<li><%=authUser.getName()%> 님 안녕하세요^^</li>
