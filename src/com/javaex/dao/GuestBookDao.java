@@ -15,14 +15,14 @@ public class GuestBookDao extends DaoUtil {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
-	private String id ="guestbookdb";
-	private String pw ="guestbookdb";
+	private String dbId ="guestbookdb";
+	private String dbPw ="guestbookdb";
 	
 	public List<GuestBookVo> getList(){
 		
 		List<GuestBookVo> guestBookList = new ArrayList<GuestBookVo>();
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		try {
 			String query = "";
@@ -59,7 +59,7 @@ public class GuestBookDao extends DaoUtil {
 	
 	public void insert(GuestBookVo guestBookVo) {
 
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		try {
 			String query = "";
@@ -82,7 +82,7 @@ public class GuestBookDao extends DaoUtil {
 
 	public void delete(String pw, int no) {
 		
-		conn = super.getConnection(id, pw);
+		conn = super.getConnection(dbId, dbPw);
 		
 		try {
 			String query = "";

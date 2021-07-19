@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/WEB-INF/views/include/css.jsp"></jsp:include>
+<c:import url="/WEB-INF/views/include/css.jsp"></c:import>
 <!--//css  -->
+
 </head>
 
 <body>
 	<div id="wrap">
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<!-- //header -->
 
-		<jsp:include page="/WEB-INF/views/include/navigator.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/navigator.jsp"></c:import>
 		<!-- //nav -->
 
 		<div id="container" class="clearfix">
-		
-			<jsp:include page="/WEB-INF/views/include/aside.jsp"></jsp:include>
+			<c:import url="/WEB-INF/views/include/aside.jsp"></c:import>
 			<!-- //aside -->
 
 			<div id="content">
@@ -92,7 +94,7 @@
 		</div>
 		<!-- //container  -->
 
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- //footer -->
 
 	</div>

@@ -74,6 +74,7 @@ public class GuestBookController extends HttpServlet {
 			//파라미터 꺼내기
 			int no = Integer.parseInt(request.getParameter("no"));
 			String password = request.getParameter("password");
+			System.out.println(password);
 			
 			//dao 삭제
 			GuestBookDao guestBookDao = new GuestBookDao();

@@ -127,7 +127,9 @@ public class UserController extends HttpServlet {
 			String pw = request.getParameter("pw");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
-
+			
+			System.out.println(gender);
+			
 			UserVo userModify = new UserVo(no, pw, name, gender);	
 			UserDao userDao = new UserDao();
 			

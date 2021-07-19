@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-String servletPath = request.getServletPath();
-if (servletPath.contains("main")) {
-	servletPath = "main";
-} else if (servletPath.contains("user")) {
-	servletPath = "user";
-} else if (servletPath.contains("guestbook")) {
-	servletPath = "guestbook";
-}
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:set var="servletPath" value="${pageContext.request.servletPath }"/>
 <link href="/mysite/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite/assets/css/<%=servletPath%>.css" rel="stylesheet" type="text/css">
+<c:choose>
+	<c:when test="${fn:contains(servletPath, 'main')}">				<!-- 서블릿 패스 내부에 main이 있을 때 -->
+		<link href="/mysite/assets/css/main.css" rel="stylesheet" type="text/css">
+	</c:when>													
+	<c:when test="${fn:contains(servletPath, 'user')}">				<!-- 서블릿 패스 내부에 user가 있을 때 -->
+		<link href="/mysite/assets/css/user.css" rel="stylesheet" type="text/css">
+	</c:when>
+	<c:when test="${fn:contains(servletPath, 'guestbook')}">		<!-- 서블릿 패스 내부에 guestbook이 있을 때 -->
+		<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+	</c:when>
+</c:choose>	
