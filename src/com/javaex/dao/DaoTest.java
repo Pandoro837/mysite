@@ -10,7 +10,15 @@ public class DaoTest {
 
 		BoardDao boardDao = new BoardDao();
 		//리스트 호출
-		List<BoardVo> boardList = boardDao.getList();
+		List<BoardVo> boardList = boardDao.getList("");
+		
+		for(BoardVo boardInfo : boardList)
+			System.out.println(boardInfo.toString());
+		
+		//검색 확인
+		String searchWord = "영";
+		System.out.println(searchWord);
+		boardList = boardDao.getList(searchWord);
 		
 		for(BoardVo boardInfo : boardList)
 			System.out.println(boardInfo.toString());

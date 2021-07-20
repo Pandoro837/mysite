@@ -18,7 +18,7 @@ public class BoardDao extends DaoUtil{
 	private String dbId = "userdb";
 	private String dbPw = "userdb";
 	
-	public List<BoardVo> getList(){
+	public List<BoardVo> getList(String searchWord){
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		
@@ -37,9 +37,15 @@ public class BoardDao extends DaoUtil{
 			query+=" 	users, ";
 			query+="	board ";
 			query+=" WHERE board.user_no = users.no ";
+			query+="   AND (title like ? or users.name like ?)";
 			query+=" ORDER BY reg_date DESC ";
 			
+			searchWord = "%"+searchWord+"%";
+			
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchWord);
+			pstmt.setString(2, searchWord);
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -142,6 +148,37 @@ public class BoardDao extends DaoUtil{
 		return boardRead;
 	}
 	
+	public void hit(BoardVo boardVo) {
+		
+		int iCount = boardVo.getHit();
+		iCount++;
+		boardVo.setHit(iCount);
+		
+		conn = getConnection(dbId, dbPw);
+		
+		try {
+			String query="";
+			query+=" UPDATE board ";
+			query+=" SET ";
+			query+=" 	hit = ? ";
+			query+=" WHERE board.no = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, iCount);
+			pstmt.setInt(2, boardVo.getNo());
+			
+			pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		
+		close(conn, pstmt, rs);
+		
+	}
+	
 	public void modify(String title, String content, int boardNo) {
 		
 		conn = getConnection(dbId, dbPw);
@@ -187,36 +224,6 @@ public class BoardDao extends DaoUtil{
 
 			pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("실패");
-			e.printStackTrace();
-		}
-		
-		close(conn, pstmt, rs);
-		
-	}
-	
-	public void hit(BoardVo boardVo) {
-		
-		int iCount = boardVo.getHit();
-		iCount++;
-		boardVo.setHit(iCount);
-		
-		conn = getConnection(dbId, dbPw);
-		
-		try {
-			String query="";
-			query+=" UPDATE board ";
-			query+=" SET ";
-			query+=" 	hit = ? ";
-			query+=" WHERE board.no = ? ";
-			
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, boardVo.getNo());
-			
-			pstmt.executeUpdate();
-		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("실패");

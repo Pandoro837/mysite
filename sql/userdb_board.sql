@@ -71,3 +71,17 @@ INSERT INTO board VALUES(seq_board_no.NEXTVAL, '안녕하세요', '반갑습니�
 --hit 확인
 UPDATE board SET hit = 1
 WHERE board.no = 47
+--search 확인
+SELECT
+    board.no no,
+    title,
+    hit,
+    TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss')reg_date,
+    user_no,
+    users.name name
+FROM
+    users,
+    board
+WHERE board.user_no = users.no
+  AND (title like '%영%' or users.name like '%영%')
+ORDER BY reg_date DESC;

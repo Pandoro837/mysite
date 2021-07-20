@@ -32,8 +32,14 @@ public class BoardController extends HttpServlet {
 			//boardDao 호출
 			BoardDao boardDao = new BoardDao();
 			
+			String searchWord = "";
+			
+			if(request.getParameter("searchWord") != null) {
+				searchWord+= request.getParameter("searchWord");
+			}
+			
 			//db 읽어오기
-			List<BoardVo> boardList = boardDao.getList();
+			List<BoardVo> boardList = boardDao.getList(searchWord);
 			
 			request.setAttribute("boardList", boardList);
 			
