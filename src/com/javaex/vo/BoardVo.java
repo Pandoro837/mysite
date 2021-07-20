@@ -8,6 +8,7 @@ public class BoardVo {
 	private String date;
 	private int userNo;
 	private String name;
+	private int rownum;
 	
 	public BoardVo() {
 		
@@ -23,13 +24,14 @@ public class BoardVo {
 		this.no = no;
 	}
 	
-	public BoardVo(int no, String title, int hit, String date, int userNo, String name) {
+	public BoardVo(int no, String title, int hit, String date, int userNo, String name, int rownum) {
 		this.no = no;
 		this.title = title;
 		this.hit = hit;
 		this.date = date;
 		this.userNo = userNo;
 		this.name = name;
+		this.rownum = rownum;
 	}
 	
 	public int getNo() {
@@ -88,9 +90,18 @@ public class BoardVo {
 		this.name = name;
 	}
 
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", hit=" + hit + ", date=" + date
-				+ ", userNo=" + userNo + ", name=" + name + "]";
+				+ ", userNo=" + userNo + ", name=" + name + ", rownum=" + rownum + "]";
 	}
+
 }

@@ -63,10 +63,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:set var="listLength" value="${fn:length(requestScope.boardList) }"/>
 								<c:forEach items="${boardList}" var="boardList" varStatus="status">
 									<tr>
-										<td>${listLength - status.count + 1}</td>
+										<td>${boardList.rownum}</td>
 										<td class="text-left"><a href="/mysite/board?action=read&boardNo=${boardList.no }">${boardList.title }</a></td>
 										<td>${boardList.name }</td>
 										<td>${boardList.hit }</td>

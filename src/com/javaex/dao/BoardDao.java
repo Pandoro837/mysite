@@ -26,25 +26,41 @@ public class BoardDao extends DaoUtil{
 		
 		try {
 			String query = "";
-			query+=" SELECT ";
-			query+="	board.no no, ";
-			query+="	title, ";
-			query+="	hit, ";
-			query+="	TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss') reg_date, ";
-			query+="	user_no, ";
-			query+="	users.name name ";
+			query+=" SELECT * ";
 			query+=" FROM ";
-			query+=" 	users, ";
-			query+="	board ";
-			query+=" WHERE board.user_no = users.no ";
-			query+="   AND (title like ? or users.name like ?)";
-			query+=" ORDER BY reg_date DESC ";
+			query+=" 	(SELECT ";
+			query+="		rownum, ";
+			query+="		bo.* ";
+			query+=" 	FROM ";
+			query+="		(SELECT  ";
+			query+="	 		board.no no, ";
+			query+="	 		title, ";
+			query+="			hit, ";
+			query+="	 		TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss')reg_date, ";
+			query+="	 		user_no, ";
+			query+="	 		users.name name ";
+			query+="	 	FROM ";
+			query+="	 		users, ";
+			query+="	 		board ";
+			query+="	 	WHERE board.user_no = users.no ";
+			query+="	 	ORDER BY reg_date ASC) bo)	";	
 			
-			searchWord = "%"+searchWord+"%";
-			
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, searchWord);
-			pstmt.setString(2, searchWord);
+			if(searchWord == null || searchWord.equals("")) {
+				query+=" ORDER BY rownum DESC ";
+				
+				pstmt = conn.prepareStatement(query);
+				
+			} else {
+				query+=" WHERE (title like ? or name like ?)";
+				query+=" ORDER BY rownum DESC ";
+				
+				searchWord = "%"+searchWord+"%";
+				
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setString(1, searchWord);
+				pstmt.setString(2, searchWord);
+			}
 			
 			rs = pstmt.executeQuery();
 			
@@ -55,8 +71,9 @@ public class BoardDao extends DaoUtil{
 				String date = rs.getString("reg_date");
 				int userNo = rs.getInt("user_no");
 				String name = rs.getString("name");
+				int rownum = rs.getInt("rownum");
 				
-				BoardVo boardVo = new BoardVo(no, title, hit, date, userNo, name);
+				BoardVo boardVo = new BoardVo(no, title, hit, date, userNo, name, rownum);
 				
 				boardList.add(boardVo);
 			}
@@ -70,6 +87,25 @@ public class BoardDao extends DaoUtil{
 		
 		return boardList;
 	}
+	
+	/*
+	 * public List<BoardVo> paging(List<BoardVo> boardList, int page) {
+	 * 
+	 * int row = boardList.size()/10; if(boardList.size() % 10 != 0) { row++; }
+	 * 
+	 * BoardVo[][] pageList = new BoardVo[row][10];
+	 * 
+	 * for(int r = 0; r < row; r++) { int x = 0;
+	 * 
+	 * for(int i = 0; i <=9; i++) { if(i+x <= boardList.size()) { pageList[r][i] =
+	 * boardList.get(i+x-1); } } x+=10; }
+	 * 
+	 * List<BoardVo> pagingList = new ArrayList<BoardVo>();
+	 * 
+	 * for(int i = 0; i<=9; i++) { pagingList.add(pageList[page][i]); }
+	 * 
+	 * return pagingList; }
+	 */
 	
 	public void delete(int boardNo, int userNo) {
 		

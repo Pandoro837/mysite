@@ -43,7 +43,7 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("boardList", boardList);
 			
-			String path ="WEB-INF/views/board/list.jsp";
+			String path ="/WEB-INF/views/board/list.jsp";
 			WebUtil.forward(request, response, path);
 			
 		} else if("delete".equals(action)) {
@@ -79,7 +79,7 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("boardRead", boardRead);
 			
-			String path ="WEB-INF/views/board/read.jsp";
+			String path ="/WEB-INF/views/board/read.jsp";
 			WebUtil.forward(request, response, path);
 			
 		} else if("modifyForm".equals(action)) {
@@ -94,7 +94,7 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("boardModify", boardModify);
 			
-			String path ="WEB-INF/views/board/modifyForm.jsp";
+			String path ="/WEB-INF/views/board/modifyForm.jsp";
 			WebUtil.forward(request, response, path);
 			
 		} else if("modify".equals(action)) {
@@ -113,13 +113,15 @@ public class BoardController extends HttpServlet {
 			
 		} else if("writeForm".equals(action)) {
 			
-			String path = "WEB-INF/views/board/writeForm.jsp";
+			String path = "/WEB-INF/views/board/writeForm.jsp";
 			WebUtil.forward(request, response, path);
 			
 		} else if("write".equals(action)) {
+			HttpSession session = request.getSession();
+			
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			int userNo = Integer.parseInt(request.getParameter("userNo"));
+			int userNo = ((UserVo)session.getAttribute("authUser")).getNo();
 			
 			BoardDao boardDao = new BoardDao();
 			boardDao.write(title, content, userNo);
