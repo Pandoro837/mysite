@@ -43,7 +43,7 @@ public class BoardController extends HttpServlet {
 		} else if("delete".equals(action)) {
 			System.out.println("BoardController_delete");
 			
-			int boardNo = Integer.parseInt(request.getParameter("no"));
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			
 			//boardDao 호출
 			BoardDao boardDao = new BoardDao();
@@ -62,19 +62,64 @@ public class BoardController extends HttpServlet {
 		} else if("read".equals(action)) {
 			System.out.println("BoardController_read");
 			
-			int no = Integer.parseInt(request.getParameter("no"));
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			
 			//boardDao 호출
 			BoardDao boardDao = new BoardDao();
 			
-			BoardVo boardRead = boardDao.getBoard(no);
+			BoardVo boardRead = boardDao.getBoard(boardNo);
+			
+			boardDao.hit(boardRead);
 			
 			request.setAttribute("boardRead", boardRead);
 			
 			String path ="WEB-INF/views/board/read.jsp";
 			WebUtil.forward(request, response, path);
 			
-		} else if("".equals(action)) {
+		} else if("modifyForm".equals(action)) {
+			System.out.println("BoardController_modifyForm");
+			
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			
+			//boardDao 호출
+			BoardDao boardDao = new BoardDao();
+			
+			BoardVo boardRead = boardDao.getBoard(boardNo);
+			
+			request.setAttribute("boardRead", boardRead);
+			
+			String path ="WEB-INF/views/board/modifyForm.jsp";
+			WebUtil.forward(request, response, path);
+			
+		} else if("modify".equals(action)) {
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			
+			//boardDao 호출
+			BoardDao boardDao = new BoardDao();
+			
+			boardDao.modify(title, content, boardNo);
+			
+			String url ="/mysite/board?action=list";
+			WebUtil.redirect(request, response, url);
+			
+			
+		} else if("writeForm".equals(action)) {
+			
+			String path = "WEB-INF/views/board/writeForm.jsp";
+			WebUtil.forward(request, response, path);
+			
+		} else if("write".equals(action)) {
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int userNo = Integer.parseInt(request.getParameter("userNo"));
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.write(title, content, userNo);
+			
+			String url = "/mysite/board?action=list";
+			WebUtil.redirect(request, response, url);
 			
 		}
 		

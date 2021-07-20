@@ -100,11 +100,13 @@ public class BoardDao extends DaoUtil{
 		try {
 			String query = "";
 			query+=" SELECT ";
-			query+="	title, ";
-			query+="	content, ";
+			query+="	users.name name, ";
 			query+="	hit, ";
 			query+="	TO_CHAR(reg_date,'yy/mm/dd') reg_date, ";
-			query+="	users.name name ";
+			query+="	title, ";
+			query+="	content, ";
+			query+="	user_no, ";
+			query+="	board.no ";
 			query+=" FROM ";
 			query+=" 	users, ";
 			query+="	board ";
@@ -123,8 +125,10 @@ public class BoardDao extends DaoUtil{
 				String date = rs.getString("reg_date");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
+				int userNo = rs.getInt("user_no");
+				int boardNo = rs.getInt("no");
 				
-				boardRead = new BoardVo(name, hit, date, title, content);
+				boardRead = new BoardVo(name, hit, date, title, content, userNo, boardNo);
 			
 			}
 				
@@ -136,6 +140,91 @@ public class BoardDao extends DaoUtil{
 		close(conn, pstmt, rs);
 		
 		return boardRead;
+	}
+	
+	public void modify(String title, String content, int boardNo) {
+		
+		conn = getConnection(dbId, dbPw);
+		
+		try {
+			String query="";
+			query+=" UPDATE board ";
+			query+=" SET ";
+			query+=" 	title = ?, ";
+			query+=" 	content = ? ";
+			query+=" WHERE board.no = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, boardNo);
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		
+		close(conn, pstmt, rs);
+		
+	}
+	
+	public void write(String title, String content, int userNo) {
+		
+		conn = getConnection(dbId, dbPw);
+		
+		try {
+			String query="";
+			query+=" INSERT INTO board ";
+			query+=" VALUES(seq_board_no.NEXTVAL, ?, ?, 0, sysdate, ?) ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, userNo);
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		
+		close(conn, pstmt, rs);
+		
+	}
+	
+	public void hit(BoardVo boardVo) {
+		
+		int iCount = boardVo.getHit();
+		iCount++;
+		boardVo.setHit(iCount);
+		
+		conn = getConnection(dbId, dbPw);
+		
+		try {
+			String query="";
+			query+=" UPDATE board ";
+			query+=" SET ";
+			query+=" 	hit = ? ";
+			query+=" WHERE board.no = ? ";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardVo.getNo());
+			
+			pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("실패");
+			e.printStackTrace();
+		}
+		
+		close(conn, pstmt, rs);
+		
 	}
 	
 }
