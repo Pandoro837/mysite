@@ -20,5 +20,12 @@
 				<li>ajax방명록</li>
 			</ul>		
 		</c:when>
+		<c:when test ="${fn:contains(servletPath, 'board')}">
+			<h2>게시판</h2>
+			<ul>
+				<li><a href="/mysite/board?action=list">일반게시판</a></li>
+				<li><a href="">댓글게시판</a></li>
+			</ul>	
+		</c:when>
 	</c:choose>
 </div>

@@ -14,4 +14,7 @@
 	<c:when test="${fn:contains(servletPath, 'guestbook')}">		<!-- 서블릿 패스 내부에 guestbook이 있을 때 -->
 		<link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 	</c:when>
+	<c:when test="${fn:contains(servletPath, 'board')}">		<!-- 서블릿 패스 내부에 board이 있을 때 -->
+		<link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+	</c:when>
 </c:choose>	
