@@ -45,32 +45,32 @@
 					<div id="modifyForm">
 						<form action="/mysite/board" method="get">
 							<input type="hidden" name="action" value="modify">
-							<input type="hidden" name="boardNo" value="${boardRead.no }">
+							<input type="hidden" name="boardNo" value="${boardModify.no }">
 							<!-- 작성자 -->
 							<div class="form-group">
-								<span class="form-text">작성자</span> <span class="form-value">${boardRead.name}</span>
+								<span class="form-text">작성자</span> <span class="form-value">${boardModify.name}</span>
 							</div>
 
 							<!-- 조회수 -->
 							<div class="form-group">
-								<span class="form-text">조회수</span> <span class="form-value">${boardRead.hit}</span>
+								<span class="form-text">조회수</span> <span class="form-value">${boardModify.hit}</span>
 							</div>
 
 							<!-- 작성일 -->
 							<div class="form-group">
-								<span class="form-text">작성일</span> <span class="form-value">${boardRead.date}</span>
+								<span class="form-text">작성일</span> <span class="form-value">${boardModify.date}</span>
 							</div>
 
 							<!-- 제목 -->
 							<div class="form-group">
-								<label class="form-text" for="txt-title">제목</label> <input type="text" id="txt-title" name="title" value="${boardRead.title}">
+								<label class="form-text" for="txt-title">제목</label> <input type="text" id="txt-title" name="title" value="${boardModify.title}">
 							</div>
 
 
 
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name="content">${boardRead.content}</textarea>
+								<textarea id="txt-content" name="content">${boardModify.content}</textarea>
 							</div>
 
 							<a id="btn_cancel" href="mysite/board?action=list">취소</a>

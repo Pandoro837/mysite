@@ -35,7 +35,7 @@ public class BoardController extends HttpServlet {
 			String searchWord = "";
 			
 			if(request.getParameter("searchWord") != null) {
-				searchWord+= request.getParameter("searchWord");
+				searchWord = request.getParameter("searchWord");
 			}
 			
 			//db 읽어오기
@@ -90,9 +90,9 @@ public class BoardController extends HttpServlet {
 			//boardDao 호출
 			BoardDao boardDao = new BoardDao();
 			
-			BoardVo boardRead = boardDao.getBoard(boardNo);
+			BoardVo boardModify = boardDao.getBoard(boardNo);
 			
-			request.setAttribute("boardRead", boardRead);
+			request.setAttribute("boardModify", boardModify);
 			
 			String path ="WEB-INF/views/board/modifyForm.jsp";
 			WebUtil.forward(request, response, path);
