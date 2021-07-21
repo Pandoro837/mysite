@@ -36,7 +36,7 @@ public class BoardDao extends DaoUtil{
 			query+="	 		board.no no, ";
 			query+="	 		title, ";
 			query+="			hit, ";
-			query+="	 		TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss')reg_date, ";
+			query+="	 		TO_CHAR(reg_date,'yy/mm/dd hh24:mi:ss')reg_date, ";
 			query+="	 		user_no, ";
 			query+="	 		users.name name ";
 			query+="	 	FROM ";

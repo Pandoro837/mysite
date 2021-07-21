@@ -38,7 +38,7 @@ SELECT
     board.no no,
     title,
     hit,
-    TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss')reg_date,
+    TO_CHAR(reg_date,'yy/mm/dd hh24:mi:ss')reg_date,
     user_no,
     users.name name
 FROM
@@ -76,7 +76,7 @@ SELECT
     board.no no,
     title,
     hit,
-    TO_CHAR(reg_date,'yy/mm/dd hh24:mm:ss')reg_date,
+    TO_CHAR(reg_date,'yy/mm/dd hh24:mi:ss')reg_date,
     user_no,
     users.name name
 FROM
